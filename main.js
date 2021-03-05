@@ -28,6 +28,8 @@ function generateInstructionsFor(iterations) {
   return genInstructionsRec(instructions, iterations);
 }
 
+
+
 function generateCoordinatesFrom(instructions, startX, startY, unit, cd) {
   const coordinates = [];
 
@@ -38,110 +40,85 @@ function generateCoordinatesFrom(instructions, startX, startY, unit, cd) {
   let currentX = startX;
   let currentY = startY;
   instructions.forEach(instruction => {
+    let coordinate;
+
     switch(instruction) {
       case 'F':
       case 'G':
         if(current_dir === CARDINAL_DIRECTION.EAST) {
           currentX = currentX + unit;
           currentY = currentY;
-
-          const coordinate = `${currentX},${currentY}`;
-          coordinates.push(coordinate);
         } else if(current_dir === CARDINAL_DIRECTION.NORTH) {
           currentX = currentX;
           currentY = currentY - unit;
-
-          const coordinate = `${currentX},${currentY}`;
-          coordinates.push(coordinate);
         } else if(current_dir === CARDINAL_DIRECTION.WEST) {
           currentX = currentX - unit;
           currentY = currentY;
-
-          const coordinate = `${currentX},${currentY}`;
-          coordinates.push(coordinate);
         } else if(current_dir === CARDINAL_DIRECTION.SOUTH) {
           currentX = currentX;
           currentY = currentY + unit;
-
-          const coordinate = `${currentX},${currentY}`;
-          coordinates.push(coordinate);
         } else {
           throw new Error('Unparseable cardinal direction: ' + current_dir);
         }
+
+        coordinate = `${currentX},${currentY}`;
+        coordinates.push(coordinate);
         break;
       case 'L':
         if(current_dir === CARDINAL_DIRECTION.EAST) {
           currentX = currentX;
           currentY = currentY - unit;
 
-          const coordinate = `${currentX},${currentY}`;
-          coordinates.push(coordinate);
-
           current_dir = CARDINAL_DIRECTION.NORTH;
         } else if(current_dir === CARDINAL_DIRECTION.NORTH) {
           currentX = currentX - unit;
           currentY = currentY;
-
-          const coordinate = `${currentX},${currentY}`;
-          coordinates.push(coordinate);
 
           current_dir = CARDINAL_DIRECTION.WEST;
         } else if(current_dir === CARDINAL_DIRECTION.WEST) {
           currentX = currentX;
           currentY = currentY + unit;
 
-          const coordinate = `${currentX},${currentY}`;
-          coordinates.push(coordinate);
-
           current_dir = CARDINAL_DIRECTION.SOUTH;
         } else if(current_dir === CARDINAL_DIRECTION.SOUTH) {
           currentX = currentX + unit;
           currentY = currentY;
 
-          const coordinate = `${currentX},${currentY}`;
-          coordinates.push(coordinate);
-
           current_dir = CARDINAL_DIRECTION.EAST;
         } else {
           throw new Error('Unparseable cardinal direction: ' + current_dir);
         }
+
+        coordinate = `${currentX},${currentY}`;
+        coordinates.push(coordinate);
         break;
       case 'R':
         if(current_dir === CARDINAL_DIRECTION.EAST) {
           currentX = currentX;
           currentY = currentY + unit;
 
-          const coordinate = `${currentX},${currentY}`;
-          coordinates.push(coordinate);
-
           current_dir = CARDINAL_DIRECTION.SOUTH;
         } else if(current_dir === CARDINAL_DIRECTION.NORTH) {
           currentX = currentX + unit;
           currentY = currentY;
-
-          const coordinate = `${currentX},${currentY}`;
-          coordinates.push(coordinate);
 
           current_dir = CARDINAL_DIRECTION.EAST;
         } else if(current_dir === CARDINAL_DIRECTION.WEST) {
           currentX = currentX;
           currentY = currentY - unit;
 
-          const coordinate = `${currentX},${currentY}`;
-          coordinates.push(coordinate);
-
           current_dir = CARDINAL_DIRECTION.NORTH;
         } else if(current_dir === CARDINAL_DIRECTION.SOUTH) {
           currentX = currentX - unit;
           currentY = currentY;
 
-          const coordinate = `${currentX},${currentY}`;
-          coordinates.push(coordinate);
-
           current_dir = CARDINAL_DIRECTION.WEST;
         } else {
           throw new Error('Unparseable cardinal direction: ' + current_dir);
         }
+
+        coordinate = `${currentX},${currentY}`;
+        coordinates.push(coordinate);
         break;
       default:
         throw new Error('Unparseable instruction: ' + instruction);
